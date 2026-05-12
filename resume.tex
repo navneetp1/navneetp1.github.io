@@ -1,0 +1,185 @@
+%-------------------------
+% Resume — Navneet Patteri (Software Engineer)
+% Compile with: pdflatex resume.tex   (or upload to Overleaf)
+% Style: based on Jake Gutierrez's resume template
+%-------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header/footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure PDF is machine-readable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{%
+  \item\small{#1 \vspace{-2pt}}%
+}
+
+\newcommand{\resumeSubheading}[4]{%
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}%
+}
+
+\newcommand{\resumeProjectHeading}[2]{%
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}%
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    {\Huge \scshape Navneet Patteri} \\ \vspace{1pt}
+    \small +91 87502 35985 $|$
+    \href{mailto:navneet11vinod11@gmail.com}{\underline{navneet11vinod11@gmail.com}} $|$
+    \href{https://github.com/navneetp1}{\underline{github.com/navneetp1}}
+\end{center}
+
+%-----------SUMMARY-----------
+\section{Summary}
+Full-stack Software Engineer building Frappe-framework applications end-to-end at DhwaniRIS — Python doctype controllers, Vue 3 SPA frontends, and SQL schema work in a single runtime. Prior data-analytics experience (Python, SQL, Flask) brings strong fundamentals in data modeling and pipeline design. Comfortable across the stack, with deep recent investment in Frappe v15/v16 customization and the Vue / TypeScript front-of-house.
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {DhwaniRIS}{Bengaluru, India}
+      {Software Engineer}{July 2025 -- Present}
+      \resumeItemListStart
+        \resumeItem{Contribute to Frappe v15 / v16 client deployments — PRIME Rural, UWM, CRISIL, Sphere India, CORO India — as part of the engineering team building full-stack features.}
+        \resumeItem{Build doctype models and Python controllers; expose REST endpoints; develop Vue 3 SPA frontends served from the same Frappe runtime; design and tune MariaDB schemas.}
+        \resumeItem{Work inside the shared \texttt{dhwani\_frappe\_base} foundation app and \texttt{frappe\_desk\_theme} customization layer that ship across every DhwaniRIS client.}
+        \resumeItem{Integrations: SMS OTP via \texttt{frappe\_msg91\_integration}; cloud file storage via \texttt{frappe\_s3\_attachment}; mobile clients via the Frappe Mobile SDK (Flutter / Dart).}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Anudip Foundation}{Remote}
+      {Data Analyst}{Aug 2024 -- March 2025}
+      \resumeItemListStart
+        \resumeItem{Built Python data pipelines and SQL queries powering stakeholder dashboards; reduced data-processing time by 15\% through script optimization.}
+        \resumeItem{Designed interactive PowerBI and Matplotlib dashboards on customer-behavior datasets to improve downstream decision-making.}
+        \resumeItem{Foundation for the full-stack pivot: Python services, SQL, and Flask web apps as day-to-day tooling.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{PRIME Rural} $|$ \emph{Frappe v16, Python, Vue 3 SPA, MariaDB, Leaflet}}{}
+          \resumeItemListStart
+            \resumeItem{Team contribution to a rural-entrepreneur incubation platform for Meghalaya — entrepreneur profiles, 20+ diagnostic frameworks, task management, GPS village-visit mapping.}
+            \resumeItem{Scale: $\sim$199 doctypes; primary Frappe app at \texttt{prime\_rural} backed by the shared \texttt{dhwani\_frappe\_base} module.}
+            \resumeItem{Work spans doctype design, Python validators / hooks, Vue components for the SPA, and SQL aggregation for dashboards.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Weather Analytics} $|$ \emph{Python (NumPy, Pandas, Matplotlib), Flask, openMeteo API, PowerBI}}{\href{}{}}
+          \resumeItemListStart
+            \resumeItem{Analyzed 2023 weather data across 5+ cities via the openMeteo API; identified a 10\% YoY rise in average temperatures.}
+            \resumeItem{Built a Flask web app with user-selected visualizations and an interactive PowerBI dashboard surfacing monthly and yearly temperature patterns.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Diabetes Predictor} $|$ \emph{Python (NumPy, Pandas, Scikit-learn, TensorFlow), Flask}}{\href{}{}}
+          \resumeItemListStart
+            \resumeItem{Built a TensorFlow model on the PIMA dataset achieving 80\% accuracy across $\sim$800 records; identified glucose and BMI as primary predictors.}
+            \resumeItem{Deployed via Flask REST API with a browser-based form for real-time risk prediction.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{BlinkIt Sales Analysis} $|$ \emph{SQL, PowerBI, Python}}{\href{}{}}
+          \resumeItemListStart
+            \resumeItem{Wrote complex SQL queries for granular sales segmentation; integrated with PowerBI dashboards tracking KPIs across sales and operational metrics.}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Greater Noida Institute of Technology}{Greater Noida, UP}
+      {Bachelor of Technology in Computer Science and Engineering --- 93\%}{Dec 2020 -- July 2024}
+
+    \resumeSubheading
+      {Greenway Modern School}{Dilshad Garden, Delhi}
+      {PCM --- 89.6\%}{March 2018 -- March 2020}
+  \resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Python, JavaScript, TypeScript, C / C++, SQL} \\
+     \textbf{Frameworks}{: Frappe (v15, v16), Vue 3, Flask, TensorFlow, Scikit-learn} \\
+     \textbf{Databases}{: MySQL, MariaDB, PostgreSQL, MongoDB, SQL Server, Firebase} \\
+     \textbf{Tools \& Platforms}{: Git, GitHub, Linux / bash, VS Code, Jupyter, PowerBI, Advanced Excel} \\
+     \textbf{Libraries}{: pandas, NumPy, Matplotlib, Seaborn, sciPy}
+    }}
+ \end{itemize}
+
+%-----------CERTIFICATIONS-----------
+\section{Certifications}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Anudip Foundation}: Data Visualization Certification \\
+     \textbf{Anudip Foundation}: SQL Certification (Advanced Querying) \\
+     \textbf{Anudip Foundation}: Python for Data Analytics Certification
+    }}
+ \end{itemize}
+
+\end{document}

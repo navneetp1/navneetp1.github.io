@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>navneet@portfolio: ~</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Gruvbox Dark theme tokens ─── */
+    :root {
+      --bg:         #282828;
+      --bg-alt:     #3c3836;
+      --bg-chrome:  #1d2021;
+      --fg:         #ebdbb2;
+      --fg-dim:     #a89984;
+      --green:      #b8bb26;
+      --blue:       #83a598;
+      --yellow:     #fabd2f;
+      --orange:     #fe8019;
+      --red:        #fb4934;
+      --pink:       #d3869b;
+      --aqua:       #8ec07c;
+      --gray:       #928374;
+    }
+    /* ─── Catppuccin Mocha (theme toggle) ─── */
+    body.theme-catppuccin {
+      --bg:         #1e1e2e;
+      --bg-alt:     #313244;
+      --bg-chrome:  #181825;
+      --fg:         #cdd6f4;
+      --fg-dim:     #a6adc8;
+      --green:      #a6e3a1;
+      --blue:       #89b4fa;
+      --yellow:     #f9e2af;
+      --orange:     #fab387;
+      --red:        #f38ba8;
+      --pink:       #f5c2e7;
+      --aqua:       #94e2d5;
+      --gray:       #6c7086;
+    }
+    /* ─── Classic phosphor (theme toggle) ─── */
+    body.theme-classic {
+      --bg:         #000000;
+      --bg-alt:     #0a1a0a;
+      --bg-chrome:  #050505;
+      --fg:         #00ff41;
+      --fg-dim:     #00aa2b;
+      --green:      #00ff41;
+      --blue:       #00ffaa;
+      --yellow:     #ffff66;
+      --orange:     #ff9933;
+      --red:        #ff5555;
+      --pink:       #ff66cc;
+      --aqua:       #66ffee;
+      --gray:       #006622;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; }
+    body {
+      background: #0f0f0f;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', Menlo, Consolas, monospace;
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      transition: background 200ms;
+    }
+
+    .terminal {
+      width: 100%;
+      max-width: 1100px;
+      height: calc(100vh - 36px);
+      background: var(--bg);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.55), 0 8px 16px rgba(0,0,0,0.35);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #1a1a1a;
+    }
+
+    .chrome {
+      background: var(--bg-chrome);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(0,0,0,0.5);
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #28c940; }
+    .chrome-title {
+      flex: 1; text-align: center;
+      font-size: 13px; color: var(--fg-dim);
+      user-select: none;
+    }
+    .chrome-spacer { width: 56px; }
+
+    .screen {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 22px 8px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .line { white-space: pre-wrap; word-break: break-word; }
+
+    .muted    { color: var(--gray); }
+    .green    { color: var(--green); }
+    .blue     { color: var(--blue); }
+    .yellow   { color: var(--yellow); }
+    .orange   { color: var(--orange); }
+    .red      { color: var(--red); }
+    .pink     { color: var(--pink); }
+    .aqua     { color: var(--aqua); }
+    .dim      { color: var(--fg-dim); }
+    .bold     { font-weight: 700; }
+
+    .ascii { color: var(--orange); font-weight: 500; }
+    .banner-info { color: var(--fg-dim); }
+    .banner-key  { color: var(--yellow); font-weight: 500; }
+
+    .prompt-line, .input-line {
+      display: flex; gap: 0; flex-wrap: wrap;
+      align-items: baseline;
+    }
+    .user-host { color: var(--green); font-weight: 500; }
+    .colon { color: var(--fg); }
+    .path { color: var(--blue); font-weight: 500; }
+    .dollar { color: var(--fg); margin-right: 6px; }
+
+    .input-line input {
+      flex: 1;
+      min-width: 80px;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--fg);
+      font-family: inherit;
+      font-size: inherit;
+      caret-color: var(--orange);
+      padding: 0;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+    }
+    a:hover { color: var(--yellow); }
+
+    .screen::-webkit-scrollbar { width: 8px; }
+    .screen::-webkit-scrollbar-track { background: var(--bg); }
+    .screen::-webkit-scrollbar-thumb { background: var(--bg-alt); border-radius: 4px; }
+
+    .table { display: grid; gap: 4px 18px; margin: 4px 0 8px; }
+    .table.k2 { grid-template-columns: max-content 1fr; }
+    .table.k2 > .k { color: var(--yellow); }
+
+    .proj { margin: 6px 0 10px; }
+    .proj-name  { color: var(--orange); font-weight: 700; }
+    .proj-stack { color: var(--aqua); }
+    .proj-role  { color: var(--gray); font-style: italic; font-size: 12.5px; }
+
+    .badge {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      background: var(--bg-alt);
+      color: var(--fg-dim);
+      margin: 0 4px 2px 0;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .badge.frappe { color: var(--green); border-color: rgba(184,187,38,0.3); }
+    .badge.past   { color: var(--pink); border-color: rgba(211,134,155,0.3); }
+
+    .hr {
+      color: var(--gray);
+      letter-spacing: 1px;
+      margin: 2px 0;
+    }
+
+    @media (max-width: 720px) {
+      .terminal { height: 100vh; border-radius: 0; }
+      body { padding: 0; }
+      .screen { font-size: 12.5px; padding: 12px 14px 6px; }
+      .chrome-title { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal" role="application" aria-label="Terminal portfolio">
+    <div class="chrome">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <div class="chrome-title">navneet@portfolio: ~</div>
+      <div class="chrome-spacer"></div>
+    </div>
+    <div class="screen" id="screen" tabindex="0"></div>
+  </div>
+
+  <script>
+  // ════════════════════════════════════════════════════════════════════════
+  //  STATE
+  // ════════════════════════════════════════════════════════════════════════
+  const STATE = {
+    user: 'navneet',
+    host: 'portfolio',
+    cwd: '~',
+    history: [],
+    historyIdx: -1,
+    typingLocked: false,
+    themes: ['gruvbox', 'catppuccin', 'classic'],
+    themeIdx: 0,
+  };
+
+  // ════════════════════════════════════════════════════════════════════════
+  //  CONTENT
+  // ════════════════════════════════════════════════════════════════════════
+  const BANNER_CAT = [
+    '       /\\_/\\       ',
+    '      ( o.o )      ',
+    '       > ^ <       ',
+  ];
+
+  const BANNER_INFO = [
+    { k: 'Navneet Patteri', v: '' },
+    { k: '────────────────', v: '' },
+    { k: 'OS',      v: 'SDE (Linux ❤)' },
+    { k: 'Role',    v: 'Software Engineer @ DhwaniRIS' },
+    { k: 'Uptime',  v: '~10 months' },
+    { k: 'Stack',   v: 'Frappe · Python · Vue · TS · SQL' },
+    { k: 'Editor',  v: 'VS Code' },
+    { k: 'Shell',   v: 'bash' },
+  ];
+
+  const ABOUT_TEXT = [
+    'Hi, I\'m Navneet.',
+    '',
+    'I build Frappe-framework applications end-to-end at DhwaniRIS,',
+    'a Bengaluru-based product & engineering firm. Frappe is unusual',
+    'in that one runtime gives you Python on the backend AND a',
+    'first-class web frontend, so my day spans doctype design, Python',
+    'controllers, REST APIs, Vue 3 SPA components, and SQL schema work.',
+    '',
+    'Before DhwaniRIS I worked as a Data Analyst at Anudip Foundation',
+    '(Aug 2024 – Mar 2025), where I shipped Python data pipelines,',
+    'SQL queries, and Flask-backed dashboards. That foundation made',
+    'the pivot to full-stack engineering natural — most of the work',
+    'was already engineering, just labeled as analytics.',
+    '',
+    'Outside work I like Linux ricing, tinkering with shell prompts,',
+    'and the occasional bit of competitive coding to keep sharp.',
+  ];
+
+  const EDUCATION_TEXT = [
+    'Bachelor of Technology — Computer Science and Engineering',
+    'Greater Noida Institute of Technology, Greater Noida, UP',
+    'Dec 2020 – July 2024  ·  93%',
+    '',
+    'Higher Secondary (PCM) — 89.6%',
+    'Greenway Modern School, Dilshad Garden, Delhi',
+    'March 2018 – March 2020',
+  ];
+
+  const CONTACT = [
+    { k: 'Email',     v: 'navneet11vinod11@gmail.com',  href: 'mailto:navneet11vinod11@gmail.com' },
+    { k: 'Phone',     v: '+91 87502 35985',              href: 'tel:+918750235985' },
+    { k: 'GitHub',    v: 'github.com/navneetp1',         href: 'https://github.com/navneetp1' },
+    { k: 'Location',  v: 'India',                        href: null },
+  ];
+
+  const EXPERIENCE = [
+    {
+      role: 'Software Engineer',
+      org:  'DhwaniRIS',
+      span: 'July 2025 – Present  ·  ~10 months',
+      bullets: [
+        'Contribute to Frappe v15 / v16 applications across multiple client benches — PRIME Rural, UWM, CRISIL, Sphere India, CORO India — as part of the engineering team.',
+        'Full-stack feature work: Python doctype controllers, REST endpoints, Vue 3 SPA frontends served from the same Frappe runtime, MariaDB schema design.',
+        'Work inside the shared `dhwani_frappe_base` foundation app and `frappe_desk_theme` customization layer that ships across every DhwaniRIS client.',
+        'Integrations: `frappe_msg91_integration` (SMS OTP), `frappe_s3_attachment` (S3-backed file storage), Frappe Mobile SDK (Flutter/Dart) for client mobile apps.',
+      ],
+    },
+    {
+      role: 'Data Analyst',
+      org:  'Anudip Foundation',
+      span: 'Aug 2024 – March 2025',
+      bullets: [
+        'Built Python data pipelines and SQL queries powering stakeholder dashboards; reduced data-processing time by 15% via script optimization.',
+        'Created interactive PowerBI + Matplotlib dashboards on customer-behavior datasets to improve downstream decision-making.',
+        'Laid the foundation for the full-stack pivot: Python services, SQL, and Flask web apps as the day-to-day stack.',
+      ],
+    },
+  ];
+
+  const PROJECTS_FRAPPE = [
+    {
+      name: 'PRIME Rural',
+      tag:  'frappe',
+      stack: 'Frappe v16 · Python · Vue 3 SPA · MariaDB · Leaflet',
+      role:  'team contribution',
+      desc:  'Rural entrepreneur incubation platform for Meghalaya — entrepreneur profiles, 20+ diagnostic frameworks, task management, milestone tracking, GPS-based village-visit mapping. ~199 doctypes, primary Frappe app at `prime_rural`.',
+    },
+    {
+      name: 'UWM',
+      tag:  'frappe',
+      stack: 'Frappe · LMS · CRM · S3 · MSG91 SMS',
+      role:  'team contribution',
+      desc:  'Multi-app deployment combining `lms`, `uwm_learning`, `eps`, `piramal_crm`, plus the `frappe_msg91_integration` (SMS OTP) and `frappe_s3_attachment` (file storage) addons.',
+    },
+    {
+      name: 'CRISIL',
+      tag:  'frappe',
+      stack: 'Frappe · custom doctypes · form workflows',
+      role:  'team contribution',
+      desc:  'Financial-services Frappe deployment with the bespoke `crisil` and `mform_crisil` apps providing custom forms, doctype workflows, and reporting.',
+    },
+    {
+      name: 'CORO India',
+      tag:  'frappe',
+      stack: 'Frappe v15 → v16 · multi-bench',
+      role:  'team contribution',
+      desc:  'Multi-version Frappe deployment spanning v15 and v16 benches (`coro-fifteen`, `coro-frappe-v15`, `coro-v15`, `coro-version-16`) for a longstanding non-profit client.',
+    },
+    {
+      name: 'Sphere India',
+      tag:  'frappe',
+      stack: 'Frappe v16',
+      role:  'team contribution',
+      desc:  'Frappe v16 deployment with a custom app stack for the client\'s programme-management needs.',
+    },
+    {
+      name: 'Frappe Mobile SDK',
+      tag:  'frappe',
+      stack: 'Flutter · Dart · Frappe REST',
+      role:  'team contribution',
+      desc:  'Flutter/Dart SDK bridging Frappe backends to client mobile apps; used across client deployments that need offline-capable mobile experiences.',
+    },
+  ];
+
+  const PROJECTS_PAST = [
+    {
+      name: 'Weather Analytics',
+      tag:  'past',
+      stack: 'Python · Flask · openMeteo API · pandas · PowerBI',
+      role:  'personal project',
+      desc:  'Flask web app analyzing 2023 weather data across 5+ cities via the openMeteo API; user-selectable visualizations and an interactive PowerBI dashboard surfacing a 10% YoY temperature rise across the sample.',
+    },
+    {
+      name: 'Diabetes Predictor',
+      tag:  'past',
+      stack: 'Python · TensorFlow · Scikit-learn · Flask',
+      role:  'personal project',
+      desc:  'Full-stack ML application: TensorFlow model trained on the PIMA dataset (~80% accuracy), exposed via Flask REST API with a browser-based form for real-time prediction. Identified glucose and BMI as primary predictors.',
+    },
+    {
+      name: 'BlinkIt Sales Analysis',
+      tag:  'past',
+      stack: 'SQL · PowerBI · Python',
+      role:  'personal project',
+      desc:  'Built complex SQL queries for granular sales segmentation, integrated with PowerBI dashboards tracking KPIs across sales performance and operational metrics.',
+    },
+  ];
+
+  const SKILLS = [
+    { cat: 'Languages',   items: ['Python', 'JavaScript', 'TypeScript', 'C', 'C++', 'SQL'] },
+    { cat: 'Frameworks',  items: ['Frappe (v15, v16)', 'Vue 3', 'Flask', 'TensorFlow', 'Scikit-learn'] },
+    { cat: 'Databases',   items: ['MySQL', 'MariaDB', 'PostgreSQL', 'MongoDB', 'SQL Server', 'Firebase'] },
+    { cat: 'Tools',       items: ['Git', 'GitHub', 'Linux / bash', 'VS Code', 'Jupyter', 'PowerBI', 'Advanced Excel'] },
+    { cat: 'Libraries',   items: ['pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'sciPy'] },
+  ];
+
+  const CERTS = [
+    'Anudip Foundation — Data Visualization',
+    'Anudip Foundation — SQL (Advanced Querying)',
+    'Anudip Foundation — Python for Data Analytics',
+  ];
+
+  // ════════════════════════════════════════════════════════════════════════
+  //  DOM HELPERS
+  // ════════════════════════════════════════════════════════════════════════
+  const screen = document.getElementById('screen');
+
+  function el(tag, opts) {
+    const e = document.createElement(tag);
+    if (opts?.class) e.className = opts.class;
+    if (opts?.html != null) e.innerHTML = opts.html;
+    if (opts?.text != null) e.textContent = opts.text;
+    return e;
+  }
+
+  function print(html, cls) {
+    const d = document.createElement('div');
+    d.className = 'line' + (cls ? ' ' + cls : '');
+    d.innerHTML = html;
+    screen.appendChild(d);
+    scrollToBottom();
+    return d;
+  }
+
+  function printRaw(text, cls) {
+    const d = document.createElement('div');
+    d.className = 'line' + (cls ? ' ' + cls : '');
+    d.textContent = text;
+    screen.appendChild(d);
+    scrollToBottom();
+    return d;
+  }
+
+  function blank() {
+    const d = document.createElement('div');
+    d.className = 'line';
+    d.innerHTML = '&nbsp;';
+    screen.appendChild(d);
+  }
+
+  function scrollToBottom() {
+    screen.scrollTop = screen.scrollHeight;
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]));
+  }
+
+  function promptHtml() {
+    return `<span class="user-host">${STATE.user}@${STATE.host}</span><span class="colon">:</span><span class="path">${STATE.cwd}</span><span class="dollar">$</span>`;
+  }
+
+  function printPromptEcho(cmdText) {
+    const d = document.createElement('div');
+    d.className = 'line prompt-line';
+    d.innerHTML = `${promptHtml()} ${esc(cmdText)}`;
+    screen.appendChild(d);
+    scrollToBottom();
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  //  BOOT SEQUENCE
+  // ════════════════════════════════════════════════════════════════════════
+  const BOOT_LINES = [
+    'Booting Portfolio v1.0 ...',
+    'Mounted /home/navneet',
+    'Started fingerd.service',
+    'Reached target Multi-User System',
+    'Welcome.',
+  ];
+
+  async function boot() {
+    STATE.typingLocked = true;
+    for (const line of BOOT_LINES) {
+      print(`<span class="green">[  OK  ]</span> <span class="dim">${esc(line)}</span>`);
+      await sleep(110);
+    }
+    blank();
+    renderBanner();
+    blank();
+    print(`<span class="dim">Type</span> <span class="yellow">help</span> <span class="dim">to get started, or</span> <span class="yellow">ls</span> <span class="dim">to look around.</span>`);
+    blank();
+    STATE.typingLocked = false;
+    appendInputLine();
+  }
+
+  function renderBanner() {
+    // Side-by-side ASCII cat + info block
+    const rows = Math.max(BANNER_CAT.length, BANNER_INFO.length);
+    const out = [];
+    for (let i = 0; i < rows; i++) {
+      const cat = BANNER_CAT[i] || '                   ';
+      const info = BANNER_INFO[i];
+      let right = '';
+      if (info) {
+        if (info.v) {
+          right = `<span class="banner-key">${esc(info.k)}:</span> <span class="banner-info">${esc(info.v)}</span>`;
+        } else {
+          right = `<span class="ascii bold">${esc(info.k)}</span>`;
+        }
+      }
+      print(`<span class="ascii">${esc(cat)}</span>  ${right}`);
+    }
+  }
+
+  function sleep(ms) { return new Promise((r) => setTimeout(r, ms)); }
+
+  // ════════════════════════════════════════════════════════════════════════
+  //  INPUT LINE (real prompt)
+  // ════════════════════════════════════════════════════════════════════════
+  let currentInputEl = null;
+
+  function appendInputLine() {
+    const line = document.createElement('div');
+    line.className = 'line input-line';
+    line.innerHTML = `${promptHtml()} <input type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" />`;
+    screen.appendChild(line);
+    const input = line.querySelector('input');
+    currentInputEl = input;
+    input.focus();
+    input.addEventListener('keydown', onKey);
+    scrollToBottom();
+  }
+
+  function freezeInputLine(value) {
+    if (!currentInputEl) return;
+    const parent = currentInputEl.parentElement;
+    parent.innerHTML = `${promptHtml()} ${esc(value)}`;
+    currentInputEl = null;
+  }
+
+  function onKey(e) {
+    if (STATE.typingLocked) { e.preventDefault(); return; }
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const v = currentInputEl.value;
+      freezeInputLine(v);
+      if (v.trim().length > 0) {
+        STATE.history.push(v);
+        STATE.historyIdx = STATE.history.length;
+      }
+      executeCommand(v);
+      appendInputLine();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (STATE.history.length === 0) return;
+      STATE.historyIdx = Math.max(0, STATE.historyIdx - 1);
+      currentInputEl.value = STATE.history[STATE.historyIdx] ?? '';
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (STATE.history.length === 0) return;
+      STATE.historyIdx = Math.min(STATE.history.length, STATE.historyIdx + 1);
+      currentInputEl.value = STATE.history[STATE.historyIdx] ?? '';
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      const partial = currentInputEl.value;
+      const matches = Object.keys(COMMANDS).filter((c) => c.startsWith(partial));
+      if (matches.length === 1) currentInputEl.value = matches[0] + ' ';
+      else if (matches.length > 1) {
+        print(`<span class="dim">${matches.join('  ')}</span>`);
+      }
+    } else if (e.key === 'l' && e.ctrlKey) {
+      e.preventDefault();
+      doClear();
+    } else if (e.key === 'c' && e.ctrlKey) {
+      e.preventDefault();
+      const v = currentInputEl.value;
+      freezeInputLine(v + '^C');
+      appendInputLine();
+    }
+  }
+
+  // Keep focus in the input even if user clicks elsewhere in the terminal
+  screen.addEventListener('click', () => { if (currentInputEl) currentInputEl.focus(); });
+  document.addEventListener('keydown', (e) => {
+    if (currentInputEl && document.activeElement !== currentInputEl && !e.ctrlKey && !e.metaKey) {
+      currentInputEl.focus();
+    }
+  });
+
+  // ════════════════════════════════════════════════════════════════════════
+  //  COMMANDS
+  // ════════════════════════════════════════════════════════════════════════
+  const COMMANDS = {
+    help:       doHelp,
+    whoami:     doWhoami,
+    about:      doAbout,
+    ls:         doLs,
+    cd:         doCd,
+    pwd:        doPwd,
+    cat:        doCat,
+    projects:   doProjects,
+    skills:     doSkills,
+    experience: doExperience,
+    education:  doEducation,
+    contact:    doContact,
+    resume:     doResume,
+    certs:      doCerts,
+    clear:      doClear,
+    history:    doHistory,
+    echo:       doEcho,
+    date:       doDate,
+    uname:      doUname,
+    theme:      doTheme,
+    sudo:       doSudo,
+    vim:        doVim,
+    emacs:      doEmacs,
+    nano:       doNano,
+    cowsay:     doCowsay,
+    exit:       doExit,
+    banner:     () => { renderBanner(); blank(); },
+  };
+
+  function executeCommand(raw) {
+    const input = raw.trim();
+    if (!input) return;
+    const tokens = input.split(/\s+/);
+    const cmd = tokens[0];
+    const args = tokens.slice(1);
+    if (COMMANDS[cmd]) {
+      try { COMMANDS[cmd](args); }
+      catch (err) { print(`<span class="red">internal error:</span> ${esc(err.message)}`); }
+    } else {
+      print(`<span class="red">bash:</span> ${esc(cmd)}: command not found`);
+      print(`<span class="dim">Try</span> <span class="yellow">help</span> <span class="dim">for a list of commands.</span>`);
+    }
+  }
+
+  function doHelp() {
+    const groups = [
+      ['Identity',   [['whoami', 'one-line identity'], ['about', 'the longer story'], ['contact', 'how to reach me']]],
+      ['Work',       [['experience', 'work history'], ['projects', 'projects (flags: --frappe, --past, --all)'], ['skills', 'tech stack'], ['education', 'degree info'], ['certs', 'certifications']]],
+      ['Files',      [['ls', 'list files'], ['cd <dir>', 'change directory (cosmetic)'], ['pwd', 'print working directory'], ['cat <file>', 'print a file'], ['resume', 'open resume / print inline']]],
+      ['Terminal',   [['clear', 'clear screen'], ['history', 'command history'], ['theme', 'cycle gruvbox / catppuccin / classic'], ['date', 'current date'], ['uname', 'system info'], ['echo <text>', 'echo input']]],
+      ['Easter eggs',[['sudo', 'try it'], ['vim', 'editor war'], ['emacs', 'editor war (other side)'], ['nano', 'editor truce'], ['cowsay <text>', 'a cow says things']]],
+    ];
+    print(`<span class="orange bold">Available commands</span>`);
+    print(`<span class="hr">─────────────────────────────────────────────────────</span>`);
+    for (const [title, cmds] of groups) {
+      print(`<span class="yellow">${esc(title)}</span>`);
+      for (const [name, desc] of cmds) {
+        print(`  <span class="green">${esc(name).padEnd(18, ' ')}</span> <span class="dim">${esc(desc)}</span>`);
+      }
+      blank();
+    }
+    print(`<span class="dim">Hint: Up/Down arrows cycle history. Tab completes commands.</span>`);
+    blank();
+  }
+
+  function doWhoami() {
+    print(`<span class="green bold">Navneet Patteri</span> <span class="dim">— Software Engineer @ DhwaniRIS · ~10 months · full-stack via Frappe</span>`);
+    blank();
+  }
+
+  function doAbout() {
+    print(`<span class="orange bold">about.md</span>`);
+    print(`<span class="hr">────────</span>`);
+    for (const l of ABOUT_TEXT) {
+      if (l === '') blank();
+      else print(`<span class="cream">${esc(l)}</span>`);
+    }
+    blank();
+  }
+
+  function doLs() {
+    const dirs = ['experience/', 'projects/', 'skills/'];
+    const files = ['about.md', 'education.md', 'contact.txt', 'certifications.txt', 'resume.pdf'];
+    const items = [
+      ...dirs.map((d) => `<span class="blue">${esc(d)}</span>`),
+      ...files.map((f) => `<span class="cream">${esc(f)}</span>`),
+    ];
+    print(items.join('   '));
+    blank();
+  }
+
+  function doCd(args) {
+    const target = (args[0] || '~').replace(/\/$/, '');
+    const valid = ['~', '/', '.', '..', 'experience', 'projects', 'skills'];
+    if (target === '~' || target === '/' || target === '.') {
+      STATE.cwd = '~';
+    } else if (target === '..') {
+      STATE.cwd = '~';
+    } else if (valid.includes(target)) {
+      STATE.cwd = `~/${target}`;
+    } else {
+      print(`<span class="red">cd:</span> ${esc(target)}: No such file or directory`);
+    }
+    blank();
+  }
+
+  function doPwd() {
+    const real = STATE.cwd === '~' ? '/home/navneet' : `/home/navneet/${STATE.cwd.replace(/^~\//, '')}`;
+    print(`<span class="cream">${esc(real)}</span>`);
+    blank();
+  }
+
+  function doCat(args) {
+    const file = args[0];
+    if (!file) { print(`<span class="red">cat:</span> missing operand`); blank(); return; }
+    const f = file.replace(/\/$/, '');
+    if (f === 'about.md' || f === 'about') return doAbout();
+    if (f === 'education.md' || f === 'education') return doEducation();
+    if (f === 'contact.txt' || f === 'contact') return doContact();
+    if (f === 'certifications.txt' || f === 'certifications') return doCerts();
+    if (f === 'resume.pdf' || f === 'resume') {
+      print(`<span class="yellow">resume.pdf</span> <span class="dim">is binary. Try</span> <span class="yellow">resume</span> <span class="dim">to print the SDE resume inline, or open</span> <a href="./resume.html" target="_blank">resume.html</a> <span class="dim">for the printable version.</span>`);
+      blank(); return;
+    }
+    print(`<span class="red">cat:</span> ${esc(file)}: No such file or directory`);
+    blank();
+  }
+
+  function doProjects(args) {
+    const flags = new Set(args.filter((a) => a.startsWith('--')).map((a) => a.slice(2)));
+    let list;
+    if (flags.has('frappe')) list = PROJECTS_FRAPPE;
+    else if (flags.has('past')) list = PROJECTS_PAST;
+    else list = [...PROJECTS_FRAPPE, ...PROJECTS_PAST];
+
+    print(`<span class="orange bold">Projects</span> <span class="dim">${esc('(' + list.length + ')')}</span>`);
+    print(`<span class="hr">─────────────────────────────────────────────────────</span>`);
+    for (const p of list) {
+      const tag = p.tag === 'frappe'
+        ? `<span class="badge frappe">frappe</span>`
+        : `<span class="badge past">past</span>`;
+      print(`${tag} <span class="proj-name">${esc(p.name)}</span> <span class="dim">·</span> <span class="proj-stack">${esc(p.stack)}</span>`);
+      print(`  <span class="cream">${esc(p.desc)}</span>`);
+      print(`  <span class="proj-role">${esc(p.role)}</span>`);
+      blank();
+    }
+    if (!flags.has('frappe') && !flags.has('past')) {
+      print(`<span class="dim">Flags:</span> <span class="yellow">projects --frappe</span> <span class="dim">·</span> <span class="yellow">projects --past</span>`);
+      blank();
+    }
+  }
+
+  function doSkills() {
+    print(`<span class="orange bold">Skills</span>`);
+    print(`<span class="hr">──────</span>`);
+    for (const s of SKILLS) {
+      const badges = s.items.map((i) => `<span class="badge">${esc(i)}</span>`).join(' ');
+      print(`<span class="yellow">${esc(s.cat).padEnd(12, ' ')}</span> ${badges}`);
+    }
+    blank();
+  }
+
+  function doExperience() {
+    print(`<span class="orange bold">Experience</span>`);
+    print(`<span class="hr">──────────</span>`);
+    for (const x of EXPERIENCE) {
+      print(`<span class="aqua bold">${esc(x.role)}</span> <span class="dim">·</span> <span class="yellow">${esc(x.org)}</span>`);
+      print(`<span class="dim">${esc(x.span)}</span>`);
+      for (const b of x.bullets) {
+        print(`  <span class="green">•</span> <span class="cream">${esc(b)}</span>`);
+      }
+      blank();
+    }
+  }
+
+  function doEducation() {
+    print(`<span class="orange bold">education.md</span>`);
+    print(`<span class="hr">────────────</span>`);
+    for (const l of EDUCATION_TEXT) {
+      if (l === '') blank();
+      else print(`<span class="cream">${esc(l)}</span>`);
+    }
+    blank();
+  }
+
+  function doContact() {
+    print(`<span class="orange bold">contact.txt</span>`);
+    print(`<span class="hr">───────────</span>`);
+    for (const c of CONTACT) {
+      const val = c.href
+        ? `<a href="${esc(c.href)}" target="_blank">${esc(c.v)}</a>`
+        : `<span class="cream">${esc(c.v)}</span>`;
+      print(`<span class="yellow">${esc(c.k).padEnd(10, ' ')}</span> ${val}`);
+    }
+    blank();
+  }
+
+  function doCerts() {
+    print(`<span class="orange bold">certifications.txt</span>`);
+    print(`<span class="hr">──────────────────</span>`);
+    for (const c of CERTS) {
+      print(`<span class="green">✓</span> <span class="cream">${esc(c)}</span>`);
+    }
+    blank();
+  }
+
+  function doResume() {
+    print(`<span class="orange bold">Resume — Software Engineer</span>`);
+    print(`<span class="hr">──────────────────────────</span>`);
+    doWhoami();
+    print(`<span class="yellow">Summary</span>`);
+    print(`<span class="cream">Full-stack engineer building Frappe-framework applications end-to-end at DhwaniRIS — Python doctype controllers, Vue 3 SPA frontends, MariaDB schema work. Prior data-analytics experience in Python, SQL, and Flask.</span>`);
+    blank();
+    doExperience();
+    doSkills();
+    doEducation();
+    doCerts();
+    print(`<span class="dim">For a printable / shareable version:</span>`);
+    print(`  <span class="green">→</span> <a href="./resume.html" target="_blank">resume.html</a> <span class="dim">(open in browser, then File → Print → Save as PDF)</span>`);
+    print(`  <span class="green">→</span> <a href="./resume.tex" target="_blank">resume.tex</a> <span class="dim">(LaTeX source — compile via Overleaf)</span>`);
+    blank();
+  }
+
+  function doClear() {
+    screen.innerHTML = '';
+    appendInputLine();
+  }
+
+  function doHistory() {
+    if (STATE.history.length === 0) {
+      print(`<span class="dim">No history yet.</span>`);
+      blank();
+      return;
+    }
+    for (let i = 0; i < STATE.history.length; i++) {
+      print(`  <span class="dim">${String(i + 1).padStart(3, ' ')}</span>  <span class="cream">${esc(STATE.history[i])}</span>`);
+    }
+    blank();
+  }
+
+  function doEcho(args) {
+    print(`<span class="cream">${esc(args.join(' '))}</span>`);
+    blank();
+  }
+
+  function doDate() {
+    print(`<span class="cream">${esc(new Date().toString())}</span>`);
+    blank();
+  }
+
+  function doUname() {
+    print(`<span class="cream">Portfolio 1.0 navneet@portfolio #1 SMP x86_64 GNU/Linux</span>`);
+    blank();
+  }
+
+  function doTheme() {
+    STATE.themeIdx = (STATE.themeIdx + 1) % STATE.themes.length;
+    const next = STATE.themes[STATE.themeIdx];
+    document.body.classList.remove('theme-gruvbox', 'theme-catppuccin', 'theme-classic');
+    document.body.classList.add('theme-' + next);
+    print(`<span class="dim">theme →</span> <span class="yellow">${esc(next)}</span>`);
+    blank();
+  }
+
+  function doSudo() {
+    print(`<span class="red">[sudo]</span> password for navneet: <span class="dim">●●●●●●●●</span>`);
+    print(`<span class="red">navneet is not in the sudoers file. This incident will be reported.</span>`);
+    blank();
+  }
+
+  function doVim() {
+    print(`<span class="cream">vim: editor war detected. Use</span> <span class="yellow">:q!</span> <span class="cream">to escape ...</span>`);
+    print(`<span class="dim">(just kidding — :q works fine. but emacs users disagree about everything else.)</span>`);
+    blank();
+  }
+
+  function doEmacs() {
+    print(`<span class="cream">emacs: a fine operating system, lacking only a decent editor.</span>`);
+    print(`<span class="dim">— attributed to many people, none of them happy about it.</span>`);
+    blank();
+  }
+
+  function doNano() {
+    print(`<span class="green">nano</span> <span class="cream">— the editor of peace. exit with</span> <span class="yellow">^X</span>.`);
+    blank();
+  }
+
+  function doCowsay(args) {
+    const msg = args.join(' ') || 'Moo.';
+    const safe = msg.replace(/[^\x20-\x7e]/g, '');
+    const line = '─'.repeat(Math.max(safe.length, 4) + 2);
+    const cow = [
+      ` ${line}`,
+      `< ${safe} >`,
+      ` ${line}`,
+      `        \\   ^__^`,
+      `         \\  (oo)\\_______`,
+      `            (__)\\       )\\/\\`,
+      `                ||----w |`,
+      `                ||     ||`,
+    ];
+    for (const l of cow) print(`<span class="cream">${esc(l)}</span>`);
+    blank();
+  }
+
+  function doExit() {
+    print(`<span class="dim">There is no exit. You are home.</span>`);
+    blank();
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  //  KICKOFF
+  // ════════════════════════════════════════════════════════════════════════
+  boot();
+  </script>
+</body>
+</html>

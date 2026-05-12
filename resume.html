@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Navneet Patteri — Software Engineer</title>
+  <style>
+    /* ─── Print-friendly resume ──────────────────────────────────────────── */
+    :root {
+      --ink:        #1a1a1a;
+      --ink-soft:   #4a4a4a;
+      --ink-faint:  #6a6a6a;
+      --rule:       #c8c8c8;
+      --accent:     #b85b27;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: #ebe5d5;
+      color: var(--ink);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.45;
+    }
+
+    .page {
+      max-width: 8.5in;
+      margin: 24px auto;
+      padding: 0.6in 0.7in;
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      border-radius: 2px;
+    }
+
+    /* ─── Header ─── */
+    .header {
+      text-align: center;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--ink);
+      margin-bottom: 14px;
+    }
+    .header h1 {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 30pt;
+      font-weight: 400;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .header .meta {
+      font-size: 10.5pt;
+      color: var(--ink-soft);
+    }
+    .header a {
+      color: var(--ink-soft);
+      text-decoration: underline;
+      text-decoration-thickness: 0.5px;
+    }
+
+    /* ─── Sections ─── */
+    section {
+      margin-bottom: 12px;
+    }
+    section h2 {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 12.5pt;
+      font-weight: 400;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--ink);
+      padding-bottom: 2px;
+      border-bottom: 0.75px solid var(--rule);
+      margin-bottom: 8px;
+    }
+
+    /* ─── Entry blocks (Experience, Education) ─── */
+    .entry {
+      margin-bottom: 10px;
+    }
+    .entry-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .entry-head .left { font-weight: 600; }
+    .entry-head .right {
+      font-size: 10pt;
+      color: var(--ink-soft);
+      white-space: nowrap;
+    }
+    .entry-sub {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 10.5pt;
+      margin-bottom: 3px;
+    }
+    ul.bullets {
+      list-style: none;
+      padding-left: 14px;
+    }
+    ul.bullets li {
+      position: relative;
+      padding-left: 12px;
+      margin: 2px 0;
+      font-size: 10.5pt;
+    }
+    ul.bullets li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--ink-soft);
+    }
+
+    /* ─── Projects ─── */
+    .project {
+      margin-bottom: 8px;
+    }
+    .project-head {
+      font-size: 10.5pt;
+    }
+    .project-head .name { font-weight: 600; }
+    .project-head .stack {
+      font-style: italic;
+      color: var(--ink-soft);
+    }
+
+    /* ─── Skills (one-line per category) ─── */
+    .skills p {
+      margin: 2px 0;
+      font-size: 10.5pt;
+    }
+    .skills .cat {
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ─── Certifications ─── */
+    .certs p {
+      margin: 2px 0;
+      font-size: 10.5pt;
+    }
+    .certs .org { font-weight: 600; }
+
+    /* ─── Print rules ─── */
+    @media print {
+      html, body { background: #ffffff; }
+      .page {
+        margin: 0;
+        max-width: 100%;
+        padding: 0.45in 0.55in;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      a { color: var(--ink); text-decoration: none; }
+      .no-print { display: none !important; }
+    }
+
+    /* ─── Helper toolbar (screen only) ─── */
+    .toolbar {
+      max-width: 8.5in;
+      margin: 12px auto 0;
+      padding: 0 8px;
+      font-family: 'JetBrains Mono', Menlo, Consolas, monospace;
+      font-size: 11px;
+      color: #4a4a4a;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .toolbar a {
+      color: #4a4a4a;
+      text-decoration: underline dotted;
+    }
+    .toolbar .hint {
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar no-print">
+    <span><a href="./index.html">← back to terminal</a></span>
+    <span class="hint">tip: File → Print → Save as PDF for a shareable copy</span>
+  </div>
+
+  <div class="page">
+
+    <!-- ─── Header ─── -->
+    <div class="header">
+      <h1>Navneet Patteri</h1>
+      <div class="meta">
+        +91 87502 35985 &nbsp;·&nbsp;
+        <a href="mailto:navneet11vinod11@gmail.com">navneet11vinod11@gmail.com</a> &nbsp;·&nbsp;
+        <a href="https://github.com/navneetp1">github.com/navneetp1</a>
+      </div>
+    </div>
+
+    <!-- ─── Summary ─── -->
+    <section>
+      <h2>Summary</h2>
+      <p style="font-size: 10.5pt;">
+        Full-stack Software Engineer building Frappe-framework applications end-to-end at DhwaniRIS — Python doctype controllers, Vue 3 SPA frontends, and SQL schema work in a single runtime. Prior data-analytics experience (Python, SQL, Flask) brings strong fundamentals in data modeling and pipeline design. Comfortable across the stack, with deep recent investment in Frappe v15 / v16 customization and the Vue / TypeScript front-of-house.
+      </p>
+    </section>
+
+    <!-- ─── Experience ─── -->
+    <section>
+      <h2>Experience</h2>
+
+      <div class="entry">
+        <div class="entry-head">
+          <span class="left">DhwaniRIS</span>
+          <span class="right">Bengaluru, India</span>
+        </div>
+        <div class="entry-sub">
+          <span>Software Engineer</span>
+          <span>July 2025 – Present</span>
+        </div>
+        <ul class="bullets">
+          <li>Contribute to Frappe v15 / v16 client deployments — PRIME Rural, UWM, CRISIL, Sphere India, CORO India — as part of the engineering team building full-stack features.</li>
+          <li>Build doctype models and Python controllers; expose REST endpoints; develop Vue 3 SPA frontends served from the same Frappe runtime; design and tune MariaDB schemas.</li>
+          <li>Work inside the shared <code>dhwani_frappe_base</code> foundation app and <code>frappe_desk_theme</code> customization layer that ship across every DhwaniRIS client.</li>
+          <li>Integrations: SMS OTP via <code>frappe_msg91_integration</code>; cloud file storage via <code>frappe_s3_attachment</code>; mobile clients via the Frappe Mobile SDK (Flutter / Dart).</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <span class="left">Anudip Foundation</span>
+          <span class="right">Remote</span>
+        </div>
+        <div class="entry-sub">
+          <span>Data Analyst</span>
+          <span>Aug 2024 – March 2025</span>
+        </div>
+        <ul class="bullets">
+          <li>Built Python data pipelines and SQL queries powering stakeholder dashboards; reduced data-processing time by 15% through script optimization.</li>
+          <li>Designed interactive PowerBI and Matplotlib dashboards on customer-behavior datasets to improve downstream decision-making.</li>
+          <li>Foundation for the full-stack pivot — Python services, SQL, and Flask web apps as day-to-day tooling.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ─── Projects ─── -->
+    <section>
+      <h2>Projects</h2>
+
+      <div class="project">
+        <div class="project-head">
+          <span class="name">PRIME Rural</span> <span class="stack">| Frappe v16, Python, Vue 3 SPA, MariaDB, Leaflet</span>
+        </div>
+        <ul class="bullets">
+          <li>Team contribution to a rural-entrepreneur incubation platform for Meghalaya — entrepreneur profiles, 20+ diagnostic frameworks, task management, GPS village-visit mapping.</li>
+          <li>Scale: ~199 doctypes; primary Frappe app at <code>prime_rural</code> backed by the shared <code>dhwani_frappe_base</code> module.</li>
+          <li>Work spans doctype design, Python validators / hooks, Vue components for the SPA, and SQL aggregation for dashboards.</li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <span class="name">Weather Analytics</span> <span class="stack">| Python (NumPy, Pandas, Matplotlib), Flask, openMeteo API, PowerBI</span>
+        </div>
+        <ul class="bullets">
+          <li>Analyzed 2023 weather data across 5+ cities via the openMeteo API; identified a 10% YoY rise in average temperatures.</li>
+          <li>Built a Flask web app with user-selected visualizations and an interactive PowerBI dashboard surfacing monthly and yearly temperature patterns.</li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <span class="name">Diabetes Predictor</span> <span class="stack">| Python (NumPy, Pandas, Scikit-learn, TensorFlow), Flask</span>
+        </div>
+        <ul class="bullets">
+          <li>Built a TensorFlow model on the PIMA dataset achieving 80% accuracy across ~800 records; identified glucose and BMI as primary predictors.</li>
+          <li>Deployed via Flask REST API with a browser-based form for real-time risk prediction.</li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <span class="name">BlinkIt Sales Analysis</span> <span class="stack">| SQL, PowerBI, Python</span>
+        </div>
+        <ul class="bullets">
+          <li>Wrote complex SQL queries for granular sales segmentation; integrated with PowerBI dashboards tracking KPIs across sales and operational metrics.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ─── Education ─── -->
+    <section>
+      <h2>Education</h2>
+
+      <div class="entry">
+        <div class="entry-head">
+          <span class="left">Greater Noida Institute of Technology</span>
+          <span class="right">Greater Noida, UP</span>
+        </div>
+        <div class="entry-sub">
+          <span>Bachelor of Technology in Computer Science and Engineering — 93%</span>
+          <span>Dec 2020 – July 2024</span>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <span class="left">Greenway Modern School</span>
+          <span class="right">Dilshad Garden, Delhi</span>
+        </div>
+        <div class="entry-sub">
+          <span>PCM — 89.6%</span>
+          <span>March 2018 – March 2020</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Skills ─── -->
+    <section class="skills">
+      <h2>Technical Skills</h2>
+      <p><span class="cat">Languages:</span> Python, JavaScript, TypeScript, C / C++, SQL</p>
+      <p><span class="cat">Frameworks:</span> Frappe (v15, v16), Vue 3, Flask, TensorFlow, Scikit-learn</p>
+      <p><span class="cat">Databases:</span> MySQL, MariaDB, PostgreSQL, MongoDB, SQL Server, Firebase</p>
+      <p><span class="cat">Tools &amp; Platforms:</span> Git, GitHub, Linux / bash, VS Code, Jupyter, PowerBI, Advanced Excel</p>
+      <p><span class="cat">Libraries:</span> pandas, NumPy, Matplotlib, Seaborn, sciPy</p>
+    </section>
+
+    <!-- ─── Certifications ─── -->
+    <section class="certs">
+      <h2>Certifications</h2>
+      <p><span class="org">Anudip Foundation:</span> Data Visualization Certification</p>
+      <p><span class="org">Anudip Foundation:</span> SQL Certification (Advanced Querying)</p>
+      <p><span class="org">Anudip Foundation:</span> Python for Data Analytics Certification</p>
+    </section>
+
+  </div>
+</body>
+</html>
